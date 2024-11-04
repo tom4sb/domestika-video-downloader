@@ -1,6 +1,8 @@
 # domestika-video-downloader
 Script to save videos from Domestika
 
+Currently, only one CSV can be processed in each execution.
+
 # Expected CSV format
 ```
 1,"Materiales necesarios para esmaltar",https://cdn-videos.domestika.org/videos/000/016/738/78f075aace9b780f466a0aa71b9c902f/master.m3u8?1676387965
