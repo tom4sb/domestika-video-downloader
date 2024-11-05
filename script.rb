@@ -1,9 +1,10 @@
 # Libraries
 require "csv"
 
-# Command templates
+# String templates
 FFMPEG_COMMAND_TEMPLATE = "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"./output/%{course_title}/%{mp4_file_name}.mp4\""
 MKDIR_COMMAND_TEMPLATE = "mkdir \"./output/%{course_title}\""
+MP4_FILE_NAME_TEMPLATE = "[%{video_number}] %{video_title}"
 
 # Classes
 class VideoInfo
@@ -39,7 +40,7 @@ Dir["./input/*"].each do |file|
     # Save videos
     video_infos.each do |video_info|
         m3u8_file_url = video_info.m3u8_url
-        mp4_file_name = "[#{video_info.number.rjust(2, "0")}] #{capitalize_words(video_info.title)}"
+        mp4_file_name = MP4_FILE_NAME_TEMPLATE % { video_number: video_info.number.rjust(2, "0"), video_title: capitalize_words(video_info.title) }
         ffmpeg_command = FFMPEG_COMMAND_TEMPLATE % { m3u8_file_url: m3u8_file_url, course_title: course_title, mp4_file_name: mp4_file_name }
         %x[#{ffmpeg_command}]
     end
