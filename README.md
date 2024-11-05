@@ -1,7 +1,5 @@
-# domestika-video-downloader
-Script to save videos from Domestika
-
-Currently, only one CSV can be processed in each execution.
+# Domestika video downloader
+Script to save videos from Domestika.
 
 # Expected CSV format
 ```
