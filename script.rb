@@ -62,7 +62,7 @@ def build_course_output_path(course_csv_file)
 end
 
 def load_video_infos(course_csv_file)
-    video_infos = Array.new
+    video_infos = []
     CSV.foreach(course_csv_file, headers: false) { |row| video_infos << VideoInfo.new(*row) }
     video_infos
 end
