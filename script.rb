@@ -1,5 +1,32 @@
 # Libraries
 require "csv"
+require "optparse"
+
+# Options
+arguments = {}
+OptionParser.new do |options|
+    options.banner = "Domestika video downloader script accepts the following command-line options:"
+
+    options.on(
+        "--file FILE_NAME",
+        "Specifies the file to process by its name.") do |file_name|
+            arguments[:file] = file_name
+    end
+
+    options.on(
+        "--dir DIRECTORY_PATH",
+        "Specifies the directory's path that contains the files to process.") do |directory_path|
+            arguments[:dir] = directory_path
+    end
+
+    options.on(
+        "-h",
+        "--help",
+        "Prints a summary of the options.") do
+            puts options
+            exit
+    end
+end.parse!
 
 # Constants
 OUTPUT_PATH = "./output"
