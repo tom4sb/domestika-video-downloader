@@ -3,7 +3,7 @@ require "csv"
 
 # String templates
 FFMPEG_COMMAND_TEMPLATE = "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"./output/%{course_title}/%{mp4_file_name}.mp4\""
-MKDIR_COMMAND_TEMPLATE = "mkdir \"./output/%{course_title}\""
+MKDIR_COMMAND_TEMPLATE = "mkdir -p \"./output/%{course_title}\""
 MP4_FILE_NAME_TEMPLATE = "[%{video_number}] %{video_title}"
 
 # Classes
