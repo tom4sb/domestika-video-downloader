@@ -7,13 +7,16 @@ DIR_OPTION_MESSAGE = "Specifies the directory's path that contains the files to 
 FILE_OPTION_MESSAGE = "Specifies the file to process by its name."
 HELP_OPTION_MESSAGE = "Prints a summary of the options."
 MISSING_ARGUMENT_ERROR_MESSAGE = "Missing argument. Use -h or --help for more information."
-NO_OPTION_ERROR_MESSAGE = "You must specify a file or a directory to process. Use -h or --help for more information."
-OPTIONS_BANNER_MESSAGE = "Domestika video downloader script accepts the following command-line options:"
+NO_OPTION_ERROR_MESSAGE =
+    "You must specify a file or a directory to process. Use -h or --help for more information."
+OPTIONS_BANNER_MESSAGE =
+    "Domestika video downloader script accepts the following command-line options:"
 
 CSV_FILE_EXTENSION = ".csv"
 OUTPUT_PATH = "./output"
 
-FFMPEG_COMMAND_TEMPLATE = "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"%{course_output_path}/%{mp4_file_name}.mp4\""
+FFMPEG_COMMAND_TEMPLATE =
+    "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"%{course_output_path}/%{mp4_file_name}.mp4\""
 MKDIR_COMMAND_TEMPLATE = "mkdir -p \"%{course_output_path}\""
 MP4_FILE_NAME_TEMPLATE = "[%{video_number}] %{video_title}"
 
@@ -22,8 +25,12 @@ options = {}
 begin
     OptionParser.new do |accepted_options|
         accepted_options.banner = OPTIONS_BANNER_MESSAGE
-        accepted_options.on("--file file_name", FILE_OPTION_MESSAGE) { |file_name| options[:file] = file_name }
-        accepted_options.on("--dir directory_path", DIR_OPTION_MESSAGE) { |directory_path| options[:dir] = directory_path }
+        accepted_options.on("--file file_name", FILE_OPTION_MESSAGE) do |file_name|
+            options[:file] = file_name
+        end
+        accepted_options.on("--dir directory_path", DIR_OPTION_MESSAGE) do |directory_path|
+            options[:dir] = directory_path
+        end
         accepted_options.on("-h", "--help", HELP_OPTION_MESSAGE) do
             puts accepted_options
             exit
