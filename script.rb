@@ -21,11 +21,8 @@ options = {}
 begin
     OptionParser.new do |accepted_options|
         accepted_options.banner = OPTIONS_BANNER_MESSAGE
-
         accepted_options.on("--file file_name", FILE_OPTION_MESSAGE) { |file_name| options[:file] = file_name }
-
         accepted_options.on("--dir directory_path", DIR_OPTION_MESSAGE) { |directory_path| options[:dir] = directory_path }
-
         accepted_options.on("-h", "--help", HELP_OPTION_MESSAGE) do
             puts accepted_options
             exit
@@ -91,9 +88,9 @@ def capitalize_words(string)
     string.split(' ').map(&:capitalize).join(' ')
 end
 
-##############
-### Script ###
-##############
+######################################################################
+############################### Script ###############################
+######################################################################
 
 if options[:file]
     process_file(options[:file])
