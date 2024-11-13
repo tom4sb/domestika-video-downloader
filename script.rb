@@ -2,39 +2,39 @@
 require "csv"
 require "optparse"
 
-# Options
-arguments = {}
-OptionParser.new do |options|
-    options.banner = "Domestika video downloader script accepts the following command-line options:"
-
-    options.on(
-        "--file FILE_NAME",
-        "Specifies the file to process by its name.") do |file_name|
-            arguments[:file] = file_name
-    end
-
-    options.on(
-        "--dir DIRECTORY_PATH",
-        "Specifies the directory's path that contains the files to process.") do |directory_path|
-            arguments[:dir] = directory_path
-    end
-
-    options.on(
-        "-h",
-        "--help",
-        "Prints a summary of the options.") do
-            puts options
-            exit
-    end
-end.parse!
-
 # Constants
+DIR_OPTION_MESSAGE = "Specifies the directory's path that contains the files to process."
+FILE_OPTION_MESSAGE = "Specifies the file to process by its name."
+HELP_OPTION_MESSAGE = "Prints a summary of the options."
+MISSING_ARGUMENT_ERROR_MESSAGE = "Missing argument. Use -h or --help for more information."
+NO_OPTION_ERROR_MESSAGE = "You must specify a file or a directory to process. Use -h or --help for more information."
+OPTIONS_BANNER_MESSAGE = "Domestika video downloader script accepts the following command-line options:"
+
 OUTPUT_PATH = "./output"
 
-# String templates
 FFMPEG_COMMAND_TEMPLATE = "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"%{course_output_path}/%{mp4_file_name}.mp4\""
 MKDIR_COMMAND_TEMPLATE = "mkdir -p \"%{course_output_path}\""
 MP4_FILE_NAME_TEMPLATE = "[%{video_number}] %{video_title}"
+
+# Options
+options = {}
+begin
+    OptionParser.new do |accepted_options|
+        accepted_options.banner = OPTIONS_BANNER_MESSAGE
+
+        accepted_options.on("--file file_name", FILE_OPTION_MESSAGE) { |file_name| options[:file] = file_name }
+
+        accepted_options.on("--dir directory_path", DIR_OPTION_MESSAGE) { |directory_path| options[:dir] = directory_path }
+
+        accepted_options.on("-h", "--help", HELP_OPTION_MESSAGE) do
+            puts accepted_options
+            exit
+        end
+    end.parse!
+rescue OptionParser::MissingArgument => e
+    puts MISSING_ARGUMENT_ERROR_MESSAGE
+    exit(1)
+end
 
 # Classes
 class VideoInfo
@@ -95,4 +95,10 @@ end
 ### Script ###
 ##############
 
-Dir["./input/*"].each(&method(:process_file))
+if options[:file]
+    process_file(options[:file])
+elsif options[:dir]
+    Dir["./input/*"].each(&method(:process_file))
+else
+    puts NO_OPTION_ERROR_MESSAGE
+end
