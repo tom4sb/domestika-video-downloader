@@ -1,6 +1,21 @@
 # Domestika video downloader
 Script to save videos from Domestika.
 
+# Requisites
+Ruby version 3.2.3 (and others, not checked)
+
+# Use
+Execute using:
+
+$ ruby script.rb [options]
+
+# Options
+```
+    --file file_name             Specifies the file to process by its name.
+    --dir directory_path         Specifies the directory's path that contains the files to process.
+    -h, --help                   Prints a summary of the options.
+```
+
 # Expected CSV format
 ```
 1,"Materiales necesarios para esmaltar",https://cdn-videos.domestika.org/videos/000/016/738/78f075aace9b780f466a0aa71b9c902f/master.m3u8?1676387965
