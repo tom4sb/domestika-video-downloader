@@ -10,6 +10,7 @@ MISSING_ARGUMENT_ERROR_MESSAGE = "Missing argument. Use -h or --help for more in
 NO_OPTION_ERROR_MESSAGE = "You must specify a file or a directory to process. Use -h or --help for more information."
 OPTIONS_BANNER_MESSAGE = "Domestika video downloader script accepts the following command-line options:"
 
+CSV_FILE_EXTENSION = ".csv"
 OUTPUT_PATH = "./output"
 
 FFMPEG_COMMAND_TEMPLATE = "ffmpeg -i \"%{m3u8_file_url}\" -c copy \"%{course_output_path}/%{mp4_file_name}.mp4\""
@@ -46,6 +47,8 @@ end
 
 # Methods
 def process_file(file)
+    return unless File.extname(file) == CSV_FILE_EXTENSION
+
     course_csv_file = File.new(file.to_s, "r")
     course_output_path = build_course_output_path(course_csv_file)
     video_infos = load_video_infos(course_csv_file)
@@ -54,7 +57,7 @@ def process_file(file)
 end
 
 def build_course_output_path(course_csv_file)
-    course_title = capitalize_words(File.basename(course_csv_file, ".csv"))
+    course_title = capitalize_words(File.basename(course_csv_file, CSV_FILE_EXTENSION))
     "#{OUTPUT_PATH}/#{course_title}"
 end
 
@@ -95,7 +98,7 @@ end
 if options[:file]
     process_file(options[:file])
 elsif options[:dir]
-    Dir["./input/*"].each(&method(:process_file))
+    Dir["#{options[:dir]}/*"].each(&method(:process_file))
 else
     puts NO_OPTION_ERROR_MESSAGE
 end
