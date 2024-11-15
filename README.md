@@ -1,8 +1,13 @@
+(Warning: this file is incomplete, not all the information is checked)
+
+
 # Domestika video downloader
 Script to save videos from Domestika.
 
 # Requisites
 Ruby version 3.2.3 (and others, not checked)
+Unix based OS
+ffmpeg version ?
 
 # Use
 Execute using:
